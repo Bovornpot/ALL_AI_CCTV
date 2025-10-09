@@ -1,0 +1,178 @@
+/* frontend/src/components/parking/ViolationsTable.css */
+
+/* --- Tab Styles (ปรับปรุงใหม่) --- */
+.tabs-container {
+    display: flex;
+    border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 16px;
+}
+
+.tab-button {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    color: #6c757d;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: -2px; /* ดึงปุ่มลงมาทับเส้นล่าง */
+    border-bottom: 2px solid transparent;
+}
+
+.tab-button.active {
+    color: #ef4444;
+    border-bottom: 2px solid #ef4444;
+}
+
+/* --- Table Styles (เหมือนเดิม) --- */
+.table-container {
+    overflow-x: auto;
+}
+
+.violations-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.violations-table th,
+.violations-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+    white-space: nowrap; /* ป้องกันการขึ้นบรรทัดใหม่ */
+}
+
+.violations-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #343a40;
+}
+
+.violations-table tbody tr:hover {
+    background-color: #f1f3f5;
+}
+
+.font-mono {
+    font-family: 'SF Mono', 'Courier New', Courier, monospace;
+}
+
+.text-gray-500 {
+    color: #6c757d;
+}
+
+/* --- Button Styles (ปรับปรุง) --- */
+.action-button.view-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 12px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.2s;
+}
+.action-button.view-button:hover {
+    background-color: #0056b3;
+}
+
+/* --- Status Badge Styles (เหมือนเดิม) --- */
+.status-badge-container { display: flex; align-items: center; gap: 8px; }
+.status-dot { width: 10px; height: 10px; border-radius: 50%; }
+.status-dot.status-violate { background-color: #dc3545; }
+.status-dot.status-normal { background-color: #28a745; }
+
+
+/* --- Modal Styles (เพิ่มใหม่) --- */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    width: 90%;
+    max-width: 800px; /* ปรับขนาด Modal สูงสุด */
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+}
+
+.modal-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.modal-close-button {
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    line-height: 1;
+    color: #888;
+    cursor: pointer;
+}
+
+.modal-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.modal-image-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.modal-details p {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: #555;
+}
+
+.modal-details p strong {
+    color: #333;
+    margin-right: 8px;
+}
+
+/* Responsive for smaller screens */
+@media (max-width: 768px) {
+    .modal-body {
+        grid-template-columns: 1fr; /* Stack image and details on small screens */
+    }
+}
+
+.empty-state-container {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #f8f9fa;
+    border: 1px dashed #e0e0e0;
+    border-radius: 8px;
+    margin-top: 16px;
+}
+
+.empty-state-container p {
+    color: #6c757d;
+    font-size: 1rem;
+}

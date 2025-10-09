@@ -1,0 +1,29 @@
+# YOLOv8 🚀, GPL-3.0 license
+
+# parameters for BoTSORT tracker
+tracker_type: botsort # This line MUST be present
+
+det_thresh: 0.5 # Confidence threshold for detections
+iou_thresh: 0.7 # IoU threshold for matching (Default for BoTSORT)
+track_buffer: 30 # Number of frames to keep lost tracks
+frame_rate: 30 # Expected frame rate
+
+# Kalman Filter parameters (อย่าเพิ่งเปลี่ยนถ้าไม่จำเป็น)
+kalman_format: xyah
+# process_noise_std: 1e-2 # Default values
+# measurement_noise_std: 1e-2 # Default values
+
+# Association parameters
+match_thresh: 0.9 # Primary matching threshold (higher is stricter)
+track_buffer: 90  # เพิ่มค่านี้
+# Re-ID Embedding related parameters
+ema_alpha: 0.9 # Alpha for Exponential Moving Average of features. Keep it high for faster updates.
+mc_lambda: 0.995 # Motion Compensation Lambda (สำหรับปรับน้ำหนักการเคลื่อนไหว)
+
+# >>> สำคัญ: พารามิเตอร์เหล่านี้ส่งผลต่อการใช้ Re-ID Feature ใน BoTSORT โดยตรง <<<
+w_association_emb: 0.85 # <<< ปรับเพิ่มขึ้นจาก 0.75 เป็น 0.85 เพื่อให้น้ำหนัก Re-ID Feature มากขึ้น
+alpha_fixed_emb: 0.90 # <<< ปรับลดลงจาก 0.95 เป็น 0.90 เพื่อให้ Feature ของ Track มีความเสถียรขึ้น (เฉลี่ยกับ Feature เก่ามากขึ้น)
+# -----------------------------------------------------------------------------------
+
+# CMC (Camera Motion Compensation) parameters
+cmc_off: False # False is usually good, enables camera motion compensation

@@ -1,0 +1,11 @@
+tracker_type: bytetrack
+
+# ByteTrack parameters (ค่าเหล่านี้สำคัญมาก)
+track_thresh: 0.5         # Detection confidence threshold for tracking
+high_thresh: 0.6          # Higher threshold for detection for initial matching
+low_thresh: 0.1           # Lower threshold for unmatched detections
+new_track_thresh: 0.7     # Threshold for new tracks
+track_buffer: 30          # Number of frames to keep lost tracks
+match_thresh: 0.8         # IOU threshold for matching
+cmc_method: 'orb'         # Camera motion compensation method (orb, sparse_flow, none)
+# reid_model: null # ByteTrack มักไม่ใช้ Re-ID ถ้ามี ให้ตั้งเป็น null หรือคอมเมนต์ออกถ้าไม่จำเป็น

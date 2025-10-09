@@ -1,0 +1,26 @@
+#deepocsort.yaml
+tracker_type: deepocsort 
+
+det_thresh: 0.45 
+
+# เพิ่มค่านี้เพื่อให้ Tracker จำ ID ที่หายไปได้นานขึ้น
+# เหมาะสำหรับกรณีที่รถโดนบัง หรือ Detection หายไปชั่วขณะ
+max_age: 120 # เดิมอาจจะเป็น 25 หรือ 30
+
+min_hits: 3 
+iou_thresh: 0.3 
+asso_func: iou 
+
+# ลดค่านี้ลงเล็กน้อยเพื่อสร้างสมดุล
+w_association_emb: 0.9 # เดิมอาจจะเป็น 0.85 หรือ 0.90
+
+inertia: 0.2 
+alpha_fixed_emb: 0.95 
+aw_param: 0.5 
+
+embedding_off: True 
+cmc_off: True 
+aw_off: True  
+delta_t: 3 
+Q_xy_scaling: 0.01 
+Q_s_scaling: 0.0001

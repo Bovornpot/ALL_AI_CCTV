@@ -1,0 +1,37 @@
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# Python
+__pycache__/
+*.pyc
+*.log
+
+# Node.js
+node_modules/
+build/
+.env
+.env.local
+npm-debug.log*
+yarn-debug.log*
+
+# Database
+*.sqlite
+*.db
+*.db-journal
+
+# AI Models (ถ้ามีขนาดใหญ่มากและไม่ได้ใช้ Git LFS ให้ใส่ไว้)
+# หากใช้ Git LFS เพื่อจัดการไฟล์ขนาดใหญ่ ไม่ต้องใส่ใน .gitignore
+inference_runtime/models/*.pt
+inference_runtime/models/*.h5
+inference_runtime/models/*.onnx
+ai_development/models/*.pt
+ai_development/models/*.h5
+ai_development/models/*.onnx
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

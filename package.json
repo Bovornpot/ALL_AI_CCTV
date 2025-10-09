@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "http-proxy-middleware": "^3.0.5",
+    "lucide-react": "^0.523.0",
+    "recharts": "^3.0.2"
+  }
+}

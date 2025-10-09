@@ -1,0 +1,65 @@
+model_path: C:/Users/chayaphonlamt/Documents/CarParkingMonitor/yolo12s.pt
+yolo_model: yolo12s.pt
+img_size:
+- 960
+conf_threshold: 0.45
+iou_threshold: 0.45
+agnostic_nms: false
+max_det: 300
+augment: false
+reid_model: /weights/model_best.pth
+boxmot_config_path: boxmot/configs/deepocsort.yaml
+detection_confidence_threshold: 0.1
+car_class_id:
+- 2
+- 5
+- 7
+tracking_method: deepocsort
+per_class_tracking: false
+debug_settings:
+  enabled: false
+  mock_violation_minutes: 1
+parking_time_limit_minutes: 15
+parking_time_threshold_seconds: 30
+grace_period_frames_exit: 30
+parked_car_timeout_seconds: 40
+movement_threshold_px: 80
+movement_frame_window: 120
+output_dir: runs/car_parking_monitor_multi_cam
+device: cuda
+half_precision: true
+api_key: nemo1234
+display_combined_max_width: 960
+display_combined_max_height: 540
+queue_max_size: 5
+save_video: false
+save_mot_results: false
+enable_brightness_adjustment: false
+brightness_method: histogram
+video_sources:
+- name: camera_1
+  branch: kubon
+  source_path: rtsp://adminhq:admin1%402@111.119.170.9:554/cam/realmonitor?channel=1&subtype=0
+  parking_zone_file: C:\Users\chayaphonlamt\Documents\cctv\AI\roi\camera_1_roi.json
+  branch_id: '11970'
+  camera_id: "\u0E08\u0E32\u0E01 Video"
+- name: camera_2
+  branch: test
+  source_path: rtsp://adminhq:admin1%402@112.132.132.9:554/cam/realmonitor?channel=1&subtype=0
+  parking_zone_file: C:\Users\chayaphonlamt\Documents\cctv\AI\roi\camera_2_roi.json
+  branch_id: '23232'
+  camera_id: 23232_test
+- name: camera_3
+  branch: kubonBE
+  source_path: C:\Users\chayaphonlamt\Videos\kubon35_BE (2).mp4
+  parking_zone_file: C:\Users\chayaphonlamt\Documents\cctv\AI\roi\camera_3_roi.json
+  branch_id: '1314'
+  camera_id: MuaMua
+performance_settings:
+  target_inference_width: 1280
+  frames_to_skip: 1
+  draw_bounding_box: true
+reid_iou_threshold: 0.3
+parked_iou_lock_threshold: 0.4
+reid_frame_window: 2.0
+stillness_grace_period_frames: 15

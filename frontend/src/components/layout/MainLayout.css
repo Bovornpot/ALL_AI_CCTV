@@ -1,0 +1,21 @@
+/* frontend/src/components/layout/MainLayout.css */
+
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content-area {
+  display: flex;
+  flex: 1;
+}
+
+.layout-content {
+  flex-grow: 1;
+  padding: 10px; /* Reduced padding from 16px to 10px */
+  margin-left: 250px; /* Offset for fixed sidebar width */
+  margin-top: 80px; /* Adjusted offset for new header height */
+  background-color: #f0f2f5;
+  overflow-y: auto;
+}

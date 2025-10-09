@@ -1,0 +1,154 @@
+/* frontend/src/components/layout/Header.css */
+
+.header-container {
+  display: flex;
+  justify-content: space-between; /* Space between left section and new right controls */
+  align-items: center;
+  padding: 10px 24px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  height: 80px;
+  border-bottom: 1px solid #e0e0e0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2000;
+}
+
+.header-left-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0; /* Prevent shrinking */
+}
+
+.header-logo {
+  height: 50px;
+}
+
+.header-app-name {
+  font-size: 20px;
+  font-weight: 500;
+  color: #555;
+}
+
+/* Removed header-title styling from here, as it's moved to MainLayout */
+
+/* New combined right controls section */
+.header-right-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Spacing between elements within this group */
+  flex-shrink: 0; /* Ensure this section does not shrink */
+  /* You can add a fixed width here if needed, e.g., width: 600px; */
+  /* For now, let content dictate width, but prevent shrinking */
+}
+
+.header-time-label {
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #333; /* Changed to dark text color */
+}
+
+.header-date-nav {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.header-nav-btn {
+    background: none;
+    border: none;
+    color: #333; /* Changed to dark text color */
+    padding: 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.header-nav-btn:hover {
+    background-color: #eee; /* Lighter hover for dark text */
+}
+
+.header-date-display-btn {
+  font-family: inherit;
+  background: none;
+  border: none;
+  color: #333; /* Changed to dark text color */
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0 8px;
+  position: relative;
+  white-space: nowrap;
+}
+
+.header-date-picker-popup {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  z-index: 2000;
+  min-width: 320px;
+  color: #333;
+}
+
+.header-filter-tabs {
+  display: flex;
+  background-color: #e0e0e0; /* Lighter background for tabs */
+  border-radius: 6px;
+  padding: 3px;
+}
+
+.header-tab-btn {
+  background: none;
+  border: none;
+  color: #555; /* Darker text for tabs */
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.header-tab-btn:hover {
+  background-color: #ccc; /* Lighter hover */
+}
+
+.header-tab-btn-active {
+  background-color: #FFC107;
+  color: #333;
+  font-weight: bold;
+}
+
+.header-branch-input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  color: #333;
+  font-size: 14px;
+  outline: none;
+  width: 150px;
+}
+
+.header-branch-input::placeholder {
+  color: #aaa;
+}
+
+.header-search-btn {
+  background: none;
+  border: none;
+  color: #333;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 5px;
+}
