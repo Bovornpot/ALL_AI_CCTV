@@ -1,4 +1,4 @@
-AI/
+aicar/
 ├── __pycache__/  (ไฟล์แคชของ Python)
 ├── boxmot/       (โมดูลหลักสำหรับ BoxMOT)
 │   ├── __pycache__/

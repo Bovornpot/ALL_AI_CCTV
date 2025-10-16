@@ -182,7 +182,7 @@ def resolve_parking_zone_file_path(parking_zone_filename: str) -> PPath:
         return PPath(parking_zone_filename)
     else:
         base_project_dir = path_to_config_file.parent
-        ai_folder_path = base_project_dir / "AI"
+        ai_folder_path = base_project_dir / "AI/aicar"
         return ai_folder_path / parking_zone_filename
 
 
@@ -362,7 +362,7 @@ async def create_camera_file(camera: VideoSource):
         roi_filename = f"{camera_name}_roi.json"
 
         # path เต็ม เช่น <project_root>/AI/roi/camera_1_roi.json
-        ai_dir = path_to_config_file.parent / "AI" / "roi"
+        ai_dir = path_to_config_file.parent / "AI/aicar" / "roi"
         ai_dir.mkdir(parents=True, exist_ok=True)
         roi_path = ai_dir / roi_filename
 
@@ -374,7 +374,7 @@ async def create_camera_file(camera: VideoSource):
         # อัปเดต config.yaml ให้กล้องนี้ชี้ไปที่ roi_file นี้
         for source in config.get("video_sources", []):
             if source["name"] == camera_name:
-                source["parking_zone_file"] = f"AI/roi/{roi_filename}"
+                source["parking_zone_file"] = f"AI/aicar/roi/{roi_filename}"
 
         # บันทึกกลับลง config.yaml
         with open(path_to_config_file, "w", encoding="utf-8") as f:

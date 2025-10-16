@@ -40,27 +40,33 @@ video_sources:
 - name: camera_1
   branch: "\u0E2A\u0E38\u0E27\u0E34\u0E19\u0E17\u0E27\u0E07\u0E28\u0E4C 28"
   source_path: rtsp://adminhq:admin1%402@111.119.170.9:554/cam/realmonitor?channel=1&subtype=0
-  parking_zone_file: C:\Users\chayaphonlamt\Documents\cctv\AI\roi\camera_1_roi.json
+  parking_zone_file: C:\Users\chayaphonlamt\Documents\cctv\AI\aicar\roi\camera_1_roi.json
   branch_id: '11970'
   camera_id: F1_11970
 - name: camera_2
   branch: "\u0E16\u0E19\u0E19\u0E20\u0E39\u0E21\u0E34\u0E40\u0E27\u0E17"
   source_path: rtsp://adminhq:admin1%402@111.156.143.9:554/Streaming/Channels/201
-  parking_zone_file: C:\Users\chayaphonlamt\Documents\cctv\AI\roi\camera_2_roi.json
+  parking_zone_file: C:\Users\chayaphonlamt\Documents\cctv\AI\aicar\roi\camera_2_roi.json
   branch_id: '15643'
   camera_id: F2_15643
 - name: camera_3
   branch: "\u0E2A\u0E38\u0E27\u0E34\u0E19\u0E17\u0E27\u0E07\u0E28\u0E4C 28"
   source_path: rtsp://adminhq:admin1%402@111.119.170.9:554/cam/realmonitor?channel=2&subtype=0
-  parking_zone_file: C:\Users\chayaphonlamt\Documents\cctv\AI\roi\camera_3_roi.json
+  parking_zone_file: C:\Users\chayaphonlamt\Documents\cctv\AI\aicar\roi\camera_3_roi.json
   branch_id: '11970'
   camera_id: F2_11970
 - name: camera_4
   branch: "\u0E2B\u0E19\u0E49\u0E32\u0E0B\u0E35\u0E1E\u0E35"
   source_path: rtsp://adminhq:admin1%402@117.199.188.9:554/Streaming/Channels/401
-  parking_zone_file: C:\Users\chayaphonlamt\Documents\cctv\AI\roi\camera_4_roi.json
+  parking_zone_file: C:\Users\chayaphonlamt\Documents\cctv\AI\aicar\roi\camera_4_roi.json
   branch_id: '9988'
   camera_id: F4_9988_BN
+- name: camera_5
+  branch: "\u0E2A\u0E32\u0E02\u0E32 (\u0E44\u0E21\u0E48\u0E23\u0E30\u0E1A\u0E38)"
+  source_path: rtsp://adminhq:admin1%402@117.112.134.9:554/Streaming/Channels/301
+  parking_zone_file: C:\Users\chayaphonlamt\Documents\cctv\AI\aicar\roi\camera_5_roi.json
+  branch_id: '1234'
+  camera_id: 111dddd
 performance_settings:
   target_inference_width: 1280
   frames_to_skip: 1

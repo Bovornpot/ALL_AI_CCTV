@@ -29,7 +29,7 @@ def resolve_parking_zone_file_path(parking_zone_filename: str, config_path: Path
     if p.is_absolute():
         return p
     base_project_dir = config_path.parent
-    ai_folder_path = base_project_dir / "AI"
+    ai_folder_path = base_project_dir / "AI/aicar"
     return ai_folder_path / parking_zone_filename
 
 def load_roi_zones(parking_zone_file_path: Path):

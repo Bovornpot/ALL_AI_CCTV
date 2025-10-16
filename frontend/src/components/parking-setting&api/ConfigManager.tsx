@@ -585,7 +585,7 @@ const ConfigManager: React.FC = () => {
       if (!roiFile) console.warn("Backend didn't return ROI filename, using default");
 
       // เติมชื่อไฟล์ ROI ใน source
-      payload.parking_zone_file = roiFile ?? `AI/roi/${cameraName}_roi.json`;
+      payload.parking_zone_file = roiFile ?? `AI/aicar/roi/${cameraName}_roi.json`;
 
       // อัปเดต state
       setConfig(prev => {

@@ -13,7 +13,7 @@ import os
 router = APIRouter(tags=["AI Control"])
 
 # Paths (แก้ตามโครงโปรเจคถ้าจำเป็น)
-AI_DIR = Path(__file__).resolve().parent.parent.parent.parent.parent / "AI"
+AI_DIR = Path(__file__).resolve().parent.parent.parent.parent.parent / "AI/aicar"
 CONFIG_FILE_PATH = Path(__file__).resolve().parent.parent.parent.parent / "config.yaml"
 
 # หา python executable: ใช้ sys.executable ก่อน (ครอบคลุม virtualenv / venv), fallback ถ้าจำเป็น

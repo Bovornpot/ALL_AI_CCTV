@@ -145,7 +145,7 @@ class WsBroadcaster:
 @torch.no_grad()
 def run(args):
     # determine config path (relative to project)
-    config_path = os.path.join(os.path.dirname(__file__), "../config.yaml")
+    config_path = os.path.join(os.path.dirname(__file__), "../../config.yaml")
     config = load_config(config_path)
 
     main_required_keys = ['yolo_model', 'reid_model', 'boxmot_config_path', 'api_key', 'video_sources']

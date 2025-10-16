@@ -7,7 +7,7 @@ iou_threshold: 0.45
 agnostic_nms: false
 max_det: 300
 augment: false
-reid_model: "C:/Users/chayaphonlamt/Documents/CarParkingMonitor/AI/weights/net_19.pth"
+reid_model: "C:/Users/chayaphonlamt/Documents/CarParkingMonitor/AI/aicar/weights/net_19.pth"
 
 boxmot_config_path: boxmot/configs/deepocsort.yaml
 detection_confidence_threshold: 0.1
