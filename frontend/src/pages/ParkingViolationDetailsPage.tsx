@@ -98,7 +98,7 @@ export const ParkingViolationDetailsPage: React.FC<ParkingViolationDetailsPagePr
 
       const [summary, paginatedEvents] = await Promise.all([
         fetchViolationSummary(summaryFilters),
-        fetchViolationEvents(currentPage, 20, eventsFilters),
+        fetchViolationEvents(currentPage, 50, eventsFilters),
       ]);
         
         setSummaryData(summary);

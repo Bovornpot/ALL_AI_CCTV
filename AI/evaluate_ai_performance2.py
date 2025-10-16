@@ -4,8 +4,9 @@ from pathlib import Path
 
 # --- ตั้งค่า MOT results ของแต่ละกล้อง ---
 mot_files = {
-    "camera_1": Path(r"C:\Users\USER\OneDrive\เอกสาร\CarParkingMonitor\AI\runs\car_parking_monitor_multi_cam\camera_1\mot_results\mot.txt"),
-    "camera_2": Path(r"C:\Users\USER\OneDrive\เอกสาร\CarParkingMonitor\AI\runs\car_parking_monitor_multi_cam\camera_2\mot_results\mot.txt"),
+    "camera_1": Path(r"C:\Users\chayaphonlamt\Documents\cctv\AI\runs\car_parking_monitor_multi_cam\camera_1\mot_results\mot.txt"),
+    "camera_2": Path(r"C:\Users\chayaphonlamt\Documents\cctv\AI\runs\car_parking_monitor_multi_cam\camera_2\mot_results\mot.txt"),
+    "camera_2": Path(r"C:\Users\chayaphonlamt\Documents\cctv\AI\runs\car_parking_monitor_multi_cam\_camera_3\mot_results\mot.txt"),
 }
 
 # --- ฟังก์ชันวิเคราะห์ MOT result ของกล้องเดียว โดยเน้นรถจอดจริง ---

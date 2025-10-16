@@ -304,11 +304,7 @@ def get_violation_summary(
     response_model=api_schemas.PaginatedTopBranchResponse,
     summary="Get a paginated list of all violating branches"
 )
-@router.get(
-    "/all_branches",
-    response_model=api_schemas.PaginatedTopBranchResponse,
-    summary="Get a paginated list of all violating branches"
-)
+
 def get_all_violating_branches(
     db: Session = Depends(get_db),
     page: int = 1,
@@ -370,7 +366,7 @@ def get_all_violating_branches(
 def get_violation_events(
     db: Session = Depends(get_db),
     page: int = 1,
-    limit: int = 20,
+    limit: int = 50,
     branch_id: Optional[str] = None,
     start_date: Optional[date] = None,
     end_date: Optional[date] = None,

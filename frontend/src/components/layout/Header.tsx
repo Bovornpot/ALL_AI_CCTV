@@ -225,7 +225,7 @@ const Header: React.FC<HeaderProps> = ({ timeSelection, onTimeSelectionChange, b
     <header className="header-container">
       {/* --- ส่วนซ้าย: Logo and App Name (คงเดิม ไม่มีการเปลี่ยนแปลง) --- */}
       <div className="header-left-section">
-        <img src="/ai-cctv-logo.svg" alt="AI CCTV Logo" className="header-logo" />
+        <img src="/aicctv_logo.png" alt="AI CCTV Logo" className="header-logo" />
         <span className="header-app-name">AI CCTV</span>
       </div>
 

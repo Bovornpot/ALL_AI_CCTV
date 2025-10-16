@@ -34,6 +34,48 @@ const formatDateTime = (isoString: string | null) => {
   });
 };
 
+function buildIP(num: string): string {
+  let ipPrefix = "117";
+  let url = "";
+  let lastOctet = ".9";
+
+  if (num.length === 1) {
+    url = `${ipPrefix}.100.10${num}${lastOctet}`;
+  } else if (num.length === 2) {
+    url = `${ipPrefix}.100.1${num}${lastOctet}`;
+  } else if (num.length === 3) {
+    url = `${ipPrefix}.10${num.charAt(0)}.1${num.substr(1)}${lastOctet}`;
+  } else if (num.length === 4) {
+    url = `${ipPrefix}.1${num.substr(0, 2)}.1${num.substr(2)}${lastOctet}`;
+  } else if (num.length === 5 && ipPrefix === "117") {
+    if (num.charAt(0) === "1") {
+      url = `111.1${num.substr(1, 2)}.1${num.substr(3)}${lastOctet}`;
+    } else {
+      url = `11${num.charAt(0)}.1${num.substr(1, 2)}.1${num.substr(3)}${lastOctet}`;
+    }
+  } else {
+    url = num;
+  }
+
+  return url;
+}
+
+// --- เพิ่ม helper สำหรับคำนวณ link จาก branch id ---
+function getCameraLinkFromBranch(branchId: string | number | undefined): string | null {
+  if (branchId === undefined || branchId === null) return null;
+  const idStr = String(branchId).trim();
+  if (!idStr) return null;
+
+  const ipOrSegment = buildIP(idStr); // ใช้ฟังก์ชัน buildIP ที่คุณให้มา
+  // ถ้าฟังก์ชัน buildIP คืนค่าเป็น IP หรือ URL แบบเต็ม เราใช้ตรง ๆ
+  // ถ้าเป็นแค่ IP segment เราสามารถ prepend scheme เช่น http:// หรือ rtsp:// ตามต้องการ
+  // ตัวอย่างนี้ใช้ http:// เป็น default แต่คุณสามารถเปลี่ยนเป็น rtsp:// ได้ตามความต้องการ
+  const maybeIp = ipOrSegment || idStr;
+  // ถ้าค่าที่ได้ดูเหมือนมี scheme แล้ว ให้ใช้ตรง ๆ
+  if (/^[a-zA-Z]+:\/\//.test(maybeIp)) return maybeIp;
+  return `http://${maybeIp}`; // <-- ปรับเป็น rtsp:// ถ้าต้องการ
+}
+
 const EvidenceModal: React.FC<{ violation: ParkingViolationEvent; onClose: () => void }> = ({ violation, onClose }) => {
     if (!violation) return null;
 
@@ -56,6 +98,21 @@ const EvidenceModal: React.FC<{ violation: ParkingViolationEvent; onClose: () =>
                         <p><strong>Vehicle ID:</strong> <span className="font-mono">{violation.vehicleId}</span></p>
                         <p><strong>Status:</strong> {violation.status}</p>
                         <p><strong>Branch:</strong> {violation.branch.name} ({violation.branch.id})</p>
+                        <p>
+                            <strong>Camera Link:</strong>{' '}
+                            {getCameraLinkFromBranch(violation.branch?.id) ? (
+                                <a
+                                href={getCameraLinkFromBranch(violation.branch?.id)!}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-600 hover:text-blue-800 underline break-all"
+                                >
+                                {getCameraLinkFromBranch(violation.branch?.id)!.replace(/^https?:\/\//, '')}
+                                </a>
+                            ) : (
+                                <span className="text-gray-500">-</span>
+                            )}
+                        </p>
                         <p><strong>Camera IP:</strong> {violation.camera.id}</p>
                         <p><strong>Entry Time:</strong> {formatDateTime(violation.entryTime)}</p>
                         <p><strong>Exit Time:</strong> {formatDateTime(violation.exitTime)}</p>
@@ -129,6 +186,7 @@ const ViolationsTable: React.FC<ViolationsTableProps> = ({ violations, currentPa
                                 <th>ID รถ</th>
                                 <th>ชื่อสาขา</th>
                                 <th>รหัสสาขา</th>
+                                <th>Camera ID</th>
                                 <th>Camera Link (IP)</th>
                                 <th>เวลาเข้า</th>
                                 <th>เวลาออก</th>
@@ -138,31 +196,51 @@ const ViolationsTable: React.FC<ViolationsTableProps> = ({ violations, currentPa
                         </thead>
                         <tbody>
                             {/* ใช้ข้อมูลที่ผ่านการกรองและเรียงลำดับแล้ว */}
-                            {filteredViolations.map((violation, index) => (
+                            {filteredViolations.map((violation, index) => {
+                                const cameraLink = getCameraLinkFromBranch(violation.branch?.id);
+                                return (
                                 <tr key={violation.id}>
-                                    <td>{(currentPage - 1) * 20 + index + 1}</td>
+                                    <td>{(currentPage - 1) * 50 + index + 1}</td>
                                     <td><StatusBadge status={violation.status} /></td>
                                     <td className="font-mono">{violation.vehicleId}</td>
                                     <td>{violation.branch.name}</td>
                                     <td>{violation.branch.id}</td>
                                     <td>{violation.camera.id}</td>
+                                    <td>
+                                    {cameraLink ? (
+                                        <a
+                                        href={cameraLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-blue-600 hover:text-blue-800 underline break-all"
+                                        onClick={(e) => {
+                                            // ถ้าต้องการหยุดการเปิดลิงก์บางกรณี ให้จัดการที่นี่
+                                        }}
+                                        >
+                                        {cameraLink.replace(/^https?:\/\//, '')}
+                                        </a>
+                                    ) : (
+                                        <span className="text-gray-500">-</span>
+                                    )}
+                                    </td>
                                     <td>{formatDateTime(violation.entryTime)}</td>
                                     <td>{formatDateTime(violation.exitTime)}</td>
                                     <td>
-                                        {Number.isFinite(violation.durationMinutes)
-                                            ? `${violation.durationMinutes.toFixed(0)} นาที`
-                                            : '-'}
+                                    {Number.isFinite(violation.durationMinutes)
+                                        ? `${violation.durationMinutes.toFixed(0)} นาที`
+                                        : '-'}
                                     </td>
                                     <td>
-                                        <button 
-                                            className="action-button view-button"
-                                            onClick={() => setSelectedViolation(violation)}
-                                        >
-                                            View
-                                        </button>
+                                    <button
+                                        className="action-button view-button"
+                                        onClick={() => setSelectedViolation(violation)}
+                                    >
+                                        View
+                                    </button>
                                     </td>
                                 </tr>
-                            ))}
+                                );
+                            })}
                         </tbody>
                     </table>
                     {/* 2. เพิ่มส่วนของ Pagination UI */}

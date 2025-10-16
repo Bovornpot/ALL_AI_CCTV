@@ -109,6 +109,60 @@ def get_merged_config_dict() -> dict:
     config = load_config()
     return {**config.model_dump(by_alias=False), **backend_override}
 
+# เพิ่มฟังก์ชันใหม่สำหรับตรวจสอบ ROI ทั้งหมด
+def validate_rois():
+    """
+    ตรวจสอบกล้องทั้งหมดใน config.yaml โดยใช้ camera_id ในการแจ้งเตือน
+    """
+    invalid_cameras = []
+    try:
+        with open(path_to_config_file, "r", encoding="utf-8") as f:
+            config = yaml.safe_load(f)
+
+        video_sources = config.get("video_sources", [])
+        if not video_sources:
+            return ["No cameras are configured in config.yaml"]
+
+        config_dir = path_to_config_file.parent
+
+        for source in video_sources:
+            # ใช้ camera_id เป็นตัวระบุหลักในการแจ้งเตือน
+            # ถ้าไม่มี camera_id (ซึ่งไม่ควรจะเกิดขึ้น) ให้ใช้ name แทน
+            branch_name = source.get("branch", "Unknown Branch")
+            camera_id = source.get("camera_id", source.get("name", "Unnamed Camera"))
+            camera_identifier = f"Branch: '{branch_name}', Camera: '{camera_id}'"
+            roi_file_path_str = source.get("parking_zone_file")
+
+            # 1. ตรวจสอบว่ามี 'parking_zone_file' ใน config หรือไม่
+            if not roi_file_path_str:
+                invalid_cameras.append(f"'{camera_identifier}' (Missing 'parking_zone_file' key in config)")
+                continue
+
+            # 2. ตรวจสอบว่าไฟล์ ROI มีอยู่จริงหรือไม่
+            roi_file_path = config_dir / roi_file_path_str
+            if not roi_file_path.exists():
+                invalid_cameras.append(f"'{camera_identifier}' (ROI file not found at '{roi_file_path_str}')")
+                continue
+
+            # 3. ตรวจสอบว่าไฟล์มีข้อมูลหรือไม่ (ไม่ใช่ไฟล์ว่าง)
+            try:
+                if roi_file_path.stat().st_size < 3: # ขนาดของ '[]' คือ 2 bytes
+                    invalid_cameras.append(f"'{camera_identifier}' (ROI file is empty)")
+                    continue
+
+                with open(roi_file_path, 'r', encoding='utf-8') as f:
+                    polygons = json.load(f)
+                    if not isinstance(polygons, list) or not polygons:
+                        invalid_cameras.append(f"'{camera_identifier}' (ROI file contains no valid polygons)")
+            except (json.JSONDecodeError, ValueError):
+                invalid_cameras.append(f"'{camera_identifier}' (ROI file is not a valid JSON)")
+
+    except FileNotFoundError:
+        return ["Could not find config.yaml"]
+    except Exception as e:
+        return [f"An error occurred while validating ROIs: {str(e)}"]
+
+    return invalid_cameras
 
 # === Pydantic Models สำหรับ ROI ===
 class RoiSetData(BaseModel):

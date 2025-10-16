@@ -127,3 +127,59 @@
   font-size: 12px;
   color: #bbb;
 }
+
+/* --- User Profile Menu Styles --- */
+.sidebar-footer {
+  position: relative; /* ทำให้เป็นจุดอ้างอิงสำหรับเมนู */
+}
+
+.sidebar-user-profile {
+  cursor: pointer; /* เปลี่ยนเมาส์เป็นรูปมือเมื่อชี้ */
+  border-radius: 8px;
+  padding: 8px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.sidebar-user-profile:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* สีพื้นหลังเมื่อ hover */
+}
+
+.profile-menu {
+  position: absolute;
+  bottom: calc(100% + 8px); /* ตำแหน่ง: อยู่เหนือ user profile และมีระยะห่าง 8px */
+  left: 8px;
+  right: 8px;
+  background-color: #2c3e50; /* สีพื้นหลังของเมนู */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* ระยะห่างระหว่างปุ่ม */
+  z-index: 10;
+}
+
+.profile-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  color: #ecf0f1;
+  font-size: 14px;
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  text-decoration: none; /* สำหรับ Link component */
+}
+
+.profile-menu-item:hover {
+  background-color: #34495e;
+}
+
+.profile-menu-icon {
+  flex-shrink: 0; /* ป้องกันไม่ให้ icon ถูกบีบ */
+}

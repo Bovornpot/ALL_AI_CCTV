@@ -1,54 +1,58 @@
 @echo off
-echo ================================
-echo Starting Car Parking Monitor System...
-echo ================================
+cls
+echo =======================================================
+echo Starting CCTV Parking Monitor System...
+echo =======================================================
 
-REM --- ตั้งชื่อ Conda environment ---
-SET CONDA_ENV_NAME=car_parking_env
-
-REM --- หา Conda activate อัตโนมัติ ---
-SET CONDA_ACTIVATE_PATH=
-IF EXIST "%USERPROFILE%\AppData\Local\anaconda3\Scripts\activate.bat" (
-    SET CONDA_ACTIVATE_PATH=%USERPROFILE%\AppData\Local\anaconda3\Scripts\activate.bat
-) ELSE IF EXIST "%USERPROFILE%\Miniconda3\Scripts\activate.bat" (
-    SET CONDA_ACTIVATE_PATH=%USERPROFILE%\Miniconda3\Scripts\activate.bat
-)
-
-IF DEFINED CONDA_ACTIVATE_PATH (
-    echo Conda activate found: %CONDA_ACTIVATE_PATH%
-    CALL "%CONDA_ACTIVATE_PATH%" %CONDA_ENV_NAME%
-) ELSE (
-    echo WARNING: Conda activate not found. Make sure Anaconda/Miniconda is installed.
-)
-
-REM --- ตรวจสอบ Node.js ---
-node -v >nul 2>&1
-IF ERRORLEVEL 1 (
-    echo WARNING: Node.js not found. Please install Node.js and add it to PATH.
-) ELSE (
-    echo Node.js detected.
-)
-
-REM --- ตั้ง project root เป็น path ปัจจุบัน ---
+REM --- กำหนดตำแหน่งของโปรเจกต์ ---
 SET PROJECT_ROOT=%~dp0
-SET APP_DIR=%PROJECT_ROOT%backend
-SET FRONTEND_DIR=%PROJECT_ROOT%my-app
+SET BACKEND_DIR=%PROJECT_ROOT%backend
+SET FRONTEND_DIR=%PROJECT_ROOT%frontend
 
-REM --- รัน Backend ใน Tab ใหม่ ---
-echo --------------------------------------------
-echo Starting Backend (FastAPI)...
-start "" cmd /k "cd /d %APP_DIR% && uvicorn app.main:app --reload
-REM --- รอ Backend สัก 3 วินาที ---
-timeout /t 3 /nobreak >nul
+REM --- ค้นหา IP Address ในเครือข่าย ---
+echo.
+echo [1/4] Finding your network IP address...
+SET "NETWORK_IP="
+FOR /F "tokens=2 delims=:" %%a IN ('ipconfig ^| findstr "IPv4"') DO (
+    SET "NETWORK_IP=%%a"
+)
+SET NETWORK_IP=%NETWORK_IP: =%
 
-REM --- รัน Frontend ใน Tab ใหม่ ---
-echo Starting Frontend (Vite)...
-start "" cmd /k "cd /d %FRONTEND_DIR% && npm run dev"
+IF NOT DEFINED NETWORK_IP (
+    echo      WARNING: Could not find network IP. Using localhost as fallback.
+    SET NETWORK_IP=localhost
+) ELSE (
+    echo      Found IP: %NETWORK_IP%
+)
 
-REM --- เปิด Browser ไปที่ frontend ---
-echo Opening browser at http://localhost:5173
-start http://localhost:5173
+REM --- รัน Backend ---
+echo.
+echo [2/4] Starting Backend (FastAPI)...
+start "Backend FastAPI" cmd /k "cd /d "%BACKEND_DIR%" && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
 
-echo ============================================
-echo All services started.
+REM --- รอ Backend ---
+echo      Waiting for backend to initialize (5 seconds)...
+timeout /t 5 /nobreak >nul
+
+REM --- รัน Frontend ---
+echo.
+echo [3/4] Starting Frontend (React)...
+REM --- 🔽🔽🔽 นี่คือบรรทัดที่แก้ไข 🔽🔽🔽 ---
+start "Frontend React" cmd /k "cd /d "%FRONTEND_DIR%" && set BROWSER=none&& npm start -- --host 0.0.0.0"
+
+REM --- รอ Frontend ---
+echo      Waiting for frontend to compile (8 seconds)...
+timeout /t 8 /nobreak >nul
+
+REM --- เปิดเบราว์เซอร์ ---
+echo.
+echo [4/4] Opening browser at http://%NETWORK_IP%:3000
+start http://%NETWORK_IP%:3000
+REM --- 🔼🔼🔼 สิ้นสุดการแก้ไข 🔼🔼🔼 ---
+
+echo.
+echo =======================================================
+echo All services are starting up in new windows.
+echo =======================================================
+echo.
 pause

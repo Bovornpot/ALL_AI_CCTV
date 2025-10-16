@@ -29,12 +29,16 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children, timeSelection, onTime
         return 'Dashboard Overview';
       case '/parking-violations':
         return 'Parking Violation';
-      case '/table-occupancy':
-        return 'Table Occupancy';
-      case '/chilled-basket-alerts':
-        return 'Chilled Basket Alert';
+      case '/people-detection':
+        return 'People Detection';
+
       case '/ai-settings':
-        return '';
+        return ''; //ไม่ต้องแสดงข้อความด้านบน มีอยู่แล้วในไฟล์
+      case '/parking-setting':
+        return ''; //ไม่ต้องแสดงข้อความด้านบน มีอยู่แล้วในไฟล์
+        
+      case '/manage-profile':
+        return 'manage-profile'; 
       default:
         return 'Dashboard';
     }

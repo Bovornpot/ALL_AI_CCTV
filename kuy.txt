@@ -1,1 +1,0 @@
-INFO:     10.152.13.99:58760 - "GET /parking_violations/summary?start_date=2025-10-07&end_date=2025-10-07&group_by_unit=hour HTTP/1.1" 200 OK

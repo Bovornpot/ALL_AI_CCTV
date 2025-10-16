@@ -1,5 +1,6 @@
 # app/api/routers/ai_control_router.py  (แก้/สร้างไฟล์นี้)
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException
+from app.api.routers.config_router import validate_rois
 from pydantic import BaseModel
 import asyncio
 import subprocess
@@ -111,7 +112,19 @@ async def start_ai(options: StartOptions):
 
     if PROCESS is not None and PROCESS.poll() is None:
         raise HTTPException(status_code=400, detail="AI is already running.")
-
+    # --- 🔽 2. เพิ่มขั้นตอนการตรวจสอบ ROI ก่อนเริ่มทำงาน 🔽 ---
+    invalid_cameras = validate_rois()
+    if invalid_cameras:
+        # สร้างข้อความ Error ที่ชัดเจน
+        error_message = "ไม่สามารถเริ่ม AI ได้ พบปัญหากับ ROI ของกล้อง:\n" + "\n".join(f"  - {msg}" for msg in invalid_cameras)
+        
+        # ส่งข้อความ Error นี้ไปที่ Log Console ผ่าน WebSocket ก่อน
+        await ws_manager.broadcast(f"[ERROR] {error_message}")
+        
+        # ส่ง HTTP Error กลับไปให้ Frontend เพื่อหยุดการทำงาน
+        raise HTTPException(status_code=400, detail=error_message)
+    await ws_manager.broadcast("=== AI Process Starting... ===")
+    # config_path = Path(options.config_file_path) if options.config_file_path else CONFIG_FILE_PATH
     if not AI_DIR.exists():
         raise HTTPException(status_code=400, detail=f"AI_DIR not found: {AI_DIR}")
 
