@@ -4,41 +4,41 @@
 
 # RTSP streams (use the values you gave)
 rtsp_streams:
-- "rtsp://adminhq:admin1%402@117.199.188.9:554/Streaming/Channels/1301"
-- "rtsp://adminhq:admin1%402@117.199.188.9:554/Streaming/Channels/1401"
-- "rtsp://adminhq:admin1%402@117.199.188.9:554/Streaming/Channels/1501"
-- "rtsp://adminhq:admin1%402@117.199.188.9:554/Streaming/Channels/1601"
+  - "rtsp://adminhq:admin1%402@117.199.188.9:554/Streaming/Channels/1301"
+  - "rtsp://adminhq:admin1%402@117.199.188.9:554/Streaming/Channels/1401"
+  - "rtsp://adminhq:admin1%402@117.199.188.9:554/Streaming/Channels/1501"
+  - "rtsp://adminhq:admin1%402@117.199.188.9:554/Streaming/Channels/1601"
 
 
 # Model weights path (relative)
 model:
-weights: "weights/yolov12s.pt" # ใส่ weights ของคุณที่นี่ (relative to aihuman/)
-conf_thres: 0.4
-iou_thres: 0.5
+  weights: "weights/yolo12s.pt" # ใส่ weights ของคุณที่นี่ (relative to aihuman/)
+  conf_thres: 0.4
+  iou_thres: 0.5
 
 
 # Tracking params
 tracker:
-type: "bytetrack" # try 'bytetrack', fallback to simple SORT if not installed
-track_high_thresh: 0.6
+  type: "bytetrack" # try 'bytetrack', fallback to simple SORT if not installed
+  track_high_thresh: 0.6
 
 
 # Homography matrices per camera (3x3) - ตัวอย่าง matrix identity ให้แก้ด้วยการ calibrate
 homographies:
-cam_0: [[1,0,0],[0,1,0],[0,0,1]]
-cam_1: [[1,0,0],[0,1,0],[0,0,1]]
-cam_2: [[1,0,0],[0,1,0],[0,0,1]]
-cam_3: [[1,0,0],[0,1,0],[0,0,1]]
+  cam_0: [[1,0,0],[0,1,0],[0,0,1]]
+  cam_1: [[1,0,0],[0,1,0],[0,0,1]]
+  cam_2: [[1,0,0],[0,1,0],[0,0,1]]
+  cam_3: [[1,0,0],[0,1,0],[0,0,1]]
 
 
 # ReID / matching thresholds
 reid:
-dist_threshold: 2.0 # meters (example) — adjust to your floorplan scale
-time_window: 5.0 # seconds allowable time gap for matching
+  dist_threshold: 2.0 # meters (example) — adjust to your floorplan scale
+  time_window: 5.0 # seconds allowable time gap for matching
 
 
 # Visualization
 visualization:
-floorplan: "assets/floorplan.png" # optional relative path to floorplan image
-heatmap_bin_size: 0.5
-save_dir: "outputs"
+  floorplan: "assets/floorplan.png" # optional relative path to floorplan image
+  heatmap_bin_size: 0.5
+  save_dir: "outputs"
